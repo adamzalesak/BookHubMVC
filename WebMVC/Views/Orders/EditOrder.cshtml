@@ -1,0 +1,36 @@
+@using WebMVC.Models
+@model EditOrderViewModel
+
+<form method="post" asp-action="EditOrder" asp-controller="Orders">
+    <div class="d-flex flex-column gap-3">
+        <div class="form-group">
+            <label asp-for="Email">Email:</label>
+            <input asp-for="Email" class="form-control"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Address">Address:</label>
+            <input asp-for="Address" class="form-control"/>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Phone">Phone:</label>
+            <input asp-for="Phone" class="form-control"/>
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="State">Order State:</label>
+            <select asp-for="State" class="form-control">
+                <option value="0">Created</option>
+                <option value="1">Ordered</option>
+                <option value="2">Payed</option>
+                <option value="3">Delivered</option>
+            </select>
+        </div>
+    </div>
+
+    <button type="submit" class="mt-3 btn btn-primary">Save Changes</button>
+</form>

@@ -1,0 +1,107 @@
+@startuml
+skinparam linetype ortho
+
+Entity Genre {
+ * id : intger <<generated>>
+ --
+ * name : text
+}
+
+Entity Author {
+ * id : integer <<generated>>
+ --
+ * name : text
+}
+
+Entity Publisher {
+ * id : integer <<generated>>
+ --
+ * name : text
+}
+
+Entity Book {
+ * id : integer <<generated>>
+ --
+ * ISBN : text
+ * name : text
+ * description : text
+ * count : integer
+ * publisherId : integer <<FK>>
+ * isDeleted : boolean
+}
+
+Entity BookGenre {
+ * bookId : integer <<FK>>
+ * genreId : integer <<FK>>
+}
+
+Entity BookAuthor {
+ * bookId : integer <<FK>>
+ * authorId : integer <<FK>>
+}
+
+Entity Price {
+ * id : integer <<generated>>
+ --
+ * price : decimal
+ * validFrom : date
+ * bookId : integer <<FK>>
+}
+
+Entity Cart {
+ * id : integer <<generated>>
+}
+
+Entity CartItem {
+ * id: integer <<generated>>
+ * bookId : integer <<FK>>
+ * cartId : integer <<FK>>
+ * count: integer
+}
+
+Entity Order {
+ * id : integer <<generated>>
+ --
+ * email : text
+ * address : text
+ * phone : number
+ * totalPrice : decimal
+ * state : enum
+ * timeStamp : timestamp
+ * cartId : integer <<FK>>
+ * userId : number <<FK>>
+}
+
+Entity User {
+ * id : integer <<generated>>
+ --
+ * username : text
+ * email : text
+ * name : text
+ * isAdministrator : boolean
+ * cartId: integer <<FK>>
+}
+
+Entity Review {
+ * id : integer <<generated>>
+ --
+ * rating : short
+ * text : text
+ * userId : integer <<FK>>
+ * bookId : integer <<FK>>
+}
+
+Genre ||..o{ BookGenre
+Book ||..o{ BookGenre
+Publisher ||..o{ Book
+Author ||..o{ BookAuthor
+Book ||..|{ BookAuthor
+Book ||..|{ Price
+Book ||..o{ CartItem
+Cart ||..o{ CartItem
+Order |o..|| Cart
+User ||..o{ Order
+User ||..o{ Review
+Book ||..o{ Review
+User |o..|| Cart
+@enduml

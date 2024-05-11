@@ -1,0 +1,25 @@
+@using WebMVC.Models.Cart
+@model CartViewModel
+
+<div>
+    <h2>Your shopping cart</h2>
+    <div class="d-flex flex-column">
+        @foreach (var cartItemViewModel in Model.CartItems)
+        {
+            await Html.RenderPartialAsync("_CartItemPartial", cartItemViewModel);
+        }
+        @if (Model.CartItems.Count > 0)
+        {
+            <div class="d-flex justify-content-between">
+                <span class="ms-2">Total price: <b>@Model.TotalPrice €</b></span>
+                <form class="me-2" method="get" asp-controller="Orders" asp-action="CreateOrder">
+                    <button type="submit" class="btn btn-primary">Create order</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <span>Your shopping cart is empty</span>
+        }
+    </div>
+</div>

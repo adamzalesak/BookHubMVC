@@ -1,0 +1,64 @@
+@startuml use_case_diagram
+left to right direction
+
+actor "Guest user" as guest_user
+actor "Logged in user" as logged_user
+
+guest_user <|-- logged_user
+
+rectangle BookHub {
+    usecase "Browse books" as browse_books
+    usecase "Search for books" as search_books
+    usecase "Search for genres" as search_genres
+    usecase "Search for publishers" as search_publishers
+    usecase "Filter books" as filter_books
+    usecase "Filter by publisher" as by_publisher
+    usecase "Filter by genre" as by_genre
+    usecase "Add book to cart" as add_to_cart
+    usecase "Change quantity" as change_quantity
+    usecase "Remove book from cart" as remove_from_cart
+    usecase "Purchase books in cart" as purchase_cart
+    usecase "Fill in order details" as fill_order_details
+    
+    usecase "Login" as login
+    usecase "Create account" as create_account
+
+    usecase "Logout" as logout
+    usecase "View purchase history" as view_history
+    usecase "Rate books" as rate_books
+    
+    usecase "Edit books" as edit_books
+    usecase "Edit genres" as edit_genres
+    usecase "Edit publishers" as edit_publishers
+    usecase "Edit orders" as edit_orders
+
+}
+
+guest_user --> browse_books
+browse_books <|-- search_books
+browse_books <|-- search_genres
+browse_books <|-- search_publishers
+browse_books <|-- filter_books
+filter_books <|-- by_publisher
+filter_books <|-- by_genre
+
+logged_user --> add_to_cart
+add_to_cart <|-- change_quantity
+logged_user --> remove_from_cart
+logged_user --> purchase_cart
+purchase_cart <|-- fill_order_details
+
+guest_user --> login
+guest_user --> create_account
+
+logged_user --> logout
+logged_user --> view_history
+logged_user --> rate_books
+
+actor "Administrator" as admin
+
+admin --> edit_books
+admin --> edit_genres
+admin --> edit_publishers
+admin --> edit_orders
+@enduml

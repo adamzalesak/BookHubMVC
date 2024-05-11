@@ -1,0 +1,30 @@
+@using WebMVC.Models.Orders
+@model EditOrdersViewModel
+
+@{
+    ViewBag.Title = "Edit orders";
+    Layout = "_Layout";
+}
+
+<h2>Edit orders</h2>
+
+@foreach (var order in Model.Orders)
+{
+    <div class="card m-2">
+        <div class="card-body d-flex justify-content-between">
+            <div>
+                <p class="card-text">@order.Timestamp</p>
+                <p class="card-text">@order.Email</p>
+                <p class="card-text">@order.TotalPrice €</p>
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+                <a href="~/orders/@order.Id/edit" class="btn btn-primary">Edit order</a>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Orders.Count == 0)
+{
+    <p>No orders to edit found</p>
+}

@@ -1,0 +1,73 @@
+﻿@using WebMVC.Models.Orders
+@model List<OrdersHistoryViewModel>
+
+@{
+    ViewBag.Title = "My Orders";
+    Layout = "_Layout";
+}
+
+<h2>My Orders</h2>
+<style>
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+
+th {
+  height: 70px;
+}
+</style>
+
+@{if (Model.Count.Equals(0)) {
+    <p>You have no recorder orders</p>
+}
+else {
+	@foreach (OrdersHistoryViewModel order in Model)
+    {
+        <table>
+            <tr>
+                <th>
+                    <p>Order time</p>
+                </th>
+                <th>
+                    <p>Order price</p>
+                </th>
+                <th>
+                    <p>Order state</p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>@order.Timestamp</p>
+                </td>        
+                <td>
+                    <p>@order.TotalPrice</p>
+                </td>
+                <td>
+                    <p>@order.State</p>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>
+                    <p>Ordered books</p>
+                </th>
+            </tr>            
+            @foreach (String book in order.Books)
+            {
+                <tr>
+                    <td>
+                        <p>@book</p>
+                    </td>
+                </tr>   
+            }
+        </table>
+    }
+}}
+

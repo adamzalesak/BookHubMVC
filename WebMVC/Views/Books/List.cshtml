@@ -1,0 +1,81 @@
+@model WebMVC.Models.Books.ListBooksViewModel
+
+@{
+    ViewBag.Title = "Books";
+    Layout = "_Layout";
+}
+
+@if (Model.FoundGenres?.Count > 0)
+{
+    <div class="d-flex flex-wrap">
+        <h2>Genres</h2>
+        @foreach (var genre in Model.FoundGenres)
+        {
+            <a class="btn btn-outline-primary m-1" asp-controller="Books" asp-action="List" asp-route-genreId="@genre.Id">@genre.Name</a>
+        }
+    </div>
+}
+
+@if (Model.FoundPublishers?.Count > 0)
+{
+    <div class="d-flex flex-wrap">
+        <h2>Publishers</h2>
+        @foreach (var publisher in Model.FoundPublishers)
+        {
+            <a class="btn btn-outline-primary m-1" asp-controller="Books" asp-action="List" asp-route-publisherId="@publisher.Id">@publisher.Name</a>
+        }
+    </div>
+}
+
+<h2>Books</h2>
+
+@if (Model.FilteredGenreName != null)
+{
+    <h3>Genre: @Model.FilteredGenreName</h3>
+}
+
+@if (Model.FilteredPublisherName != null)
+{
+    <h3>Publisher: @Model.FilteredPublisherName</h3>
+}
+
+@foreach (var book in Model.Books)
+{
+    <div class="card m-2">
+        <div class="card-body d-flex justify-content-between">
+            <div>
+                <div>
+                    <b class="card-title">@book.Name</b>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="/books/@book.Id/edit">✏️</a>
+                    }
+                </div>
+                <p class="card-text">@book.Description</p>
+                <a href="books/@book.Id" class="btn btn-primary">Detail</a>
+            </div>
+            <b class="card-text">@book.Price €</b>
+        </div>
+    </div>
+}
+
+@if(Model.Books.Count == 0)
+{
+    <p>No books found</p>
+}
+else {
+    <div class="pagination">
+    @for (int i = 1; i <= Model.PageCount; i++)
+    {
+        <a asp-action="List"
+        asp-controller="Books"
+        asp-route-genreId="@Model.GenreId"
+        asp-route-publisherId="@Model.PublisherId"
+        asp-route-searchString="@Model.SearchString"
+        asp-route-pageIndex="@i"
+        asp-route-pageSize="@Model.PageSize"
+        class="@(i == Model.PageIndex ? "active" : "")">@($" {i}, ")</a>
+    }
+</div>
+}
+

@@ -1,0 +1,31 @@
+﻿@model SidebarViewModel
+
+<aside class="p-2">
+    <b>Genres</b>
+    <ul>
+        @foreach (var genre in Model.Genres)
+        {
+            <li>
+                <a asp-action="List" asp-controller="Books" asp-route-genreId="@genre.Id">@genre.Name</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="/genres/@genre.Id/edit">✏️</a>
+                }
+            </li>
+        }
+    </ul>
+
+    <b>Publishers</b>
+    <ul>
+        @foreach (var publisher in Model.Publishers)
+        {
+            <li>
+                <a asp-action="List" asp-controller="Books" asp-route-publisherId="@publisher.Id">@publisher.Name</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="/publishers/@publisher.Id/edit">✏️</a>
+                }
+            </li>
+        }
+    </ul>
+</aside>
